@@ -1,0 +1,19 @@
+build
+debug
+nbproject
+Makefile
+dist/default/debug/*.d
+dist/default/debug/*.i
+dist/default/debug/*.p1
+dist/default/debug/*.cmf
+dist/default/debug/*.hxl
+dist/default/debug/*.lst
+dist/default/debug/*.map
+dist/default/debug/*.mum
+dist/default/debug/*.o
+dist/default/debug/*.rlf
+dist/default/debug/*.sdb
+dist/default/debug/*.sym
+dist\default\debug/*.xml
+Proteus\ Simulation/Project\ Backups
+Proteus\ Simulation/*.workspace
