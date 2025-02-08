@@ -42,6 +42,21 @@ void sendCommand(uint8_t command){
     LCDdataPort = command;
     toggleEnable();
 }
+void LCDdisplay(uint8_t line[]){
+    RSpin = 1;
+    RWpin = 0;
+    unsigned int lineLength = strlen((char*)line) + 1;
+    for(unsigned int ind = 0; ind < lineLength; ind++){
+        LCDdataPort = line[ind];
+        toggleEnable();
+    }
+}
+void selectRow(int row){
+    switch(row){
+        case 1: sendCommand(0x80); break;
+        case 2: sendCommand(0xc0); break;
+    }
+}
 void main(){
 //Initialization
     
