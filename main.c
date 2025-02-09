@@ -30,6 +30,12 @@
 #include<stdio.h>
 #include<string.h>
 
+//declaring global variables
+
+unsigned int count = 0;
+
+//functions
+
 void toggleEnable(){
     Epin = 1;
     __delay_us(10);
@@ -92,17 +98,25 @@ void main(){
     sendCommand(0x06);
     sendCommand(0x0F);
     
-//Declaring variables
+//Declaring local variables
     
     uint8_t line[16];
 
     while(1){
         indicatorLED = itemSensor;
+        if(clearCounter){
+            count = 0;
+        }
+        selectRow(1);
+        line[0]='\0';
+        sprintf((char*)line,"Count: %d",count);
+        LCDdisplay(line);
     }
 }
 
 void __interrupt()isr(){
     if(PIR1bits.CCP1IF){
+        count++;
         PIR1bits.CCP1IF = 0;
     }
     return;
