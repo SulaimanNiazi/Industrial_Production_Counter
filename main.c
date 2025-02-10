@@ -32,7 +32,7 @@
 
 //Declaring global variables
 
-unsigned int count = 0;
+unsigned int count = 0, tempCount = 0;
 
 //LCD functions
 
@@ -70,7 +70,11 @@ void main(){
     indicatorLEDDIR = 0;
     indicatorLED = 0;
     clearCounterDIR = 1;
+    
+//Timer 1 initialization    
+    
     T1CON = 0x01;           //timer 1 turned on
+    TMR1 = 0;
     
 //CCP initialization
     
@@ -102,6 +106,8 @@ void main(){
 //Declaring local variables
     
     uint8_t line[16];
+    float rate = 0;
+    unsigned int overflowCount = 0;
     
 //Main loop
 
@@ -109,23 +115,40 @@ void main(){
         
     //Inputs
         
+        
         indicatorLED = itemSensor;
         if(clearCounter){
-            __delay_ms(100);
+            __delay_ms(10);
             if(clearCounter){
                 count = 0;
+                rate = 0;
+                overflowCount = 0;
+                tempCount = 0;
             }
         }
         
     //Calculations
         
         
+        if(PIR1bits.TMR1IF){
+            PIR1bits.TMR1IF = 0;
+            overflowCount++;
+        }
+        if(overflowCount >= 76){
+            overflowCount = 0;
+            rate = ((float)tempCount)/10;
+            tempCount = 0;
+        }
         
     //Outputs
-    
+        
         selectRow(1);
-        line[0]='\0';
-        sprintf((char*)line,"Count: %d",count);
+        line[0] = '\0';
+        sprintf((char*)line, "Count: %d", count);
+        LCDdisplay(line);
+        selectRow(2);
+        line[0] = '\0';
+        sprintf((char*)line, "Rate: %.2f /s", rate);
         LCDdisplay(line);
     }
 }
@@ -133,6 +156,7 @@ void main(){
 void __interrupt()isr(){
     if(PIR1bits.CCP1IF){
         count++;
+        tempCount++;
         PIR1bits.CCP1IF = 0;
     }
     return;
