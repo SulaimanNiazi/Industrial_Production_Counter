@@ -30,11 +30,11 @@
 #include<stdio.h>
 #include<string.h>
 
-//declaring global variables
+//Declaring global variables
 
 unsigned int count = 0;
 
-//functions
+//LCD functions
 
 void toggleEnable(){
     Epin = 1;
@@ -63,6 +63,7 @@ void selectRow(int row){
         case 2: sendCommand(0xc0); break;
     }
 }
+
 void main(){
 //Initialization
     
@@ -101,12 +102,27 @@ void main(){
 //Declaring local variables
     
     uint8_t line[16];
+    
+//Main loop
 
     while(1){
+        
+    //Inputs
+        
         indicatorLED = itemSensor;
         if(clearCounter){
-            count = 0;
+            __delay_ms(100);
+            if(clearCounter){
+                count = 0;
+            }
         }
+        
+    //Calculations
+        
+        
+        
+    //Outputs
+    
         selectRow(1);
         line[0]='\0';
         sprintf((char*)line,"Count: %d",count);
