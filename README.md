@@ -3,6 +3,11 @@
 This project is a firmware application designed for the PIC16F877A microcontroller to count industrial production items. It displays the count and rate on LM016L LCD. The rate is refreshed every 10 seconds. 
 The firmware is developed using the MPLAB X IDE and the XC8 compiler.
 
+<video title="Industrial Production Counter Simulation Video" width="100%" controls autoplay>
+    <source src="./Proteus Simulation/Industrial Production Counter Simulation Video.mp4">
+    Your browser does not support the video tag.
+</video>
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
